@@ -1,3 +1,14 @@
 Commands etc voor exercise 2
 
+UNF: Everything in one entity, this is the case
+1NF: branch(staffNo, PatientNo, appointment, surgeryNo)
+     branch(staffNo, dentistName, patientNo, patientName, surgeryNo, surgeryName)
+2NF: branch(staffNo, patientNo, appointmentNo, surgeryNo)
+     branch(staffNo, dentistName)
+     branch(patientNo, patientName)
+     branch(surgeryNo, surgeryName)
+     branch(appointmentNo, date, time)
+3NF: 2NF
+BCNF: 3NF
+
 
