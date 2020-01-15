@@ -1,0 +1,166 @@
+exercise 5
+
+mysql> select guestname, city from guest g join booking b on g.guestno = b.guestno join hotel h on h.hotelno = b.hotelno where city = "London" order by guestname DESC ;
+
++--------------+--------+
+| guestname    | city   |
++--------------+--------+
+| Tina Murphy  | London |
+| Mike Ritchie | London |
+| Mike Ritchie | London |
+| John Kay     | London |
+| John Kay     | London |
+| Joe Keogh    | London |
+| Carol Farrel | London |
++--------------+--------+
+
+---
+
+select * from room where price < 40.00 and type = "double" or type = "family";
++--------+---------+--------+-------+
+| roomno | hotelno | type   | price |
++--------+---------+--------+-------+
+|    601 | fb01    | double | 29.00 |
+|    701 | fb01    | family | 39.00 |
+|    801 | ch02    | double | 15.00 |
+|   1001 | dc01    | double | 30.00 |
+|   1101 | ch01    | family | 59.99 |
+|   1101 | dc01    | family | 35.00 |
++--------+---------+--------+-------+
+
+---
+
+mysql> select * from booking where dateto IS NULL
+    -> ;
++---------+---------+------------+--------+--------+
+| hotelno | guestno | datefrom   | dateto | roomno |
++---------+---------+------------+--------+--------+
+| ch01    |   10006 | 2020-04-21 | NULL   |   1101 |
+| dc01    |   10003 | 2020-05-20 | NULL   |   1001 |
+| fb01    |   10001 | 2020-05-01 | NULL   |    701 |
++---------+---------+------------+--------+--------+
+
+---
+
+mysql> select SUM(price/12) from room;
++---------------+
+| SUM(price/12) |
++---------------+
+|     35.748333 |
++---------------+
+
+---
+
+mysql> select sum(price) from room where type = "double";
++------------+
+| sum(price) |
++------------+
+|     160.00 |
++------------+
+
+---
+
+mysql> select guestno, sum(dateto-datefrom) as days from booking group by guestno having days > 120;
++---------+-------+
+| guestno | days  |
++---------+-------+
+|   10003 | 19999 |
+|   10005 | 99997 |
++---------+-------+
+
+---
+
+mysql> select hotelname, type, price from hotel h join room r on h.hotelno = r.hotelno where hotelname = "The Tower Hotel"
+    -> ;
++-----------------+--------+-------+
+| hotelname       | type   | price |
++-----------------+--------+-------+
+| The Tower Hotel | single | 19.00 |
+| The Tower Hotel | double | 29.00 |
+| The Tower Hotel | family | 39.00 |
++-----------------+--------+-------+
+
+---
+
+mysql> select * from guest g join booking b on g.guestno = b.guestno join hotel h on b.hotelno = h.hotelno where hotelname ="The Tower Hotel" ;
++---------+--------------+-----------------------+---------+---------+------------+------------+--------+---------+-----------------+--------+
+| guestno | guestname    | guestaddress          | hotelno | guestno | datefrom   | dateto     | roomno | hotelno | hotelname       | city   |
++---------+--------------+-----------------------+---------+---------+------------+------------+--------+---------+-----------------+--------+
+|   10001 | John Kay     | 56 High St, London    | fb01    |   10001 | 2020-04-01 | 2020-04-08 |    501 | fb01    | The Tower Hotel | London |
+|   10001 | John Kay     | 56 High St, London    | fb01    |   10001 | 2020-05-01 | NULL       |    701 | fb01    | The Tower Hotel | London |
+|   10002 | Mike Ritchie | 18 Tain St, London    | fb01    |   10002 | 2020-01-04 | 2020-01-29 |    601 | fb01    | The Tower Hotel | London |
+|   10004 | Joe Keogh    | 2 Fergus Dr, Aberdeen | fb01    |   10004 | 2020-04-15 | 2020-05-15 |    601 | fb01    | The Tower Hotel | London |
+|   10005 | Carol Farrel | 6 Achray St, Glasgow  | fb01    |   10005 | 2020-05-02 | 2020-05-07 |    501 | fb01    | The Tower Hotel | London |
++---------+--------------+-----------------------+---------+---------+------------+------------+--------+---------+-----------------+--------+
+
+---
+
+mysql> select r.roomno, price, type, price, guestno, datefrom, dateto from room r join hotel h on h.hotelno = r.hotelno join booking b on b.roomno = r.roomno where hotelname = "The Tower Hotel";
++--------+-------+--------+-------+---------+------------+------------+
+| roomno | price | type   | price | guestno | datefrom   | dateto     |
++--------+-------+--------+-------+---------+------------+------------+
+|    501 | 19.00 | single | 19.00 |   10001 | 2020-04-01 | 2020-04-08 |
+|    501 | 19.00 | single | 19.00 |   10005 | 2020-05-02 | 2020-05-07 |
+|    601 | 29.00 | double | 29.00 |   10002 | 2020-01-04 | 2020-01-29 |
+|    601 | 29.00 | double | 29.00 |   10004 | 2020-04-15 | 2020-05-15 |
+|    701 | 39.00 | family | 39.00 |   10001 | 2020-05-01 | NULL       |
++--------+-------+--------+-------+---------+------------+------------+
+
+---
+
+mysql> select sum(price) from room r join booking b on r.hotelno = b.hotelno join hotel h on h.hotelno = b.hotelno where hotelname = "The Tower Hotel";
++------------+
+| sum(price) |
++------------+
+|     435.00 |
++------------+
+
+---
+
+/
+
+---
+
+mysql> select count(roomno) as amount, hotelname from room r join hotel h on r.hotelno = h.hotelno where city = "London" GROUP BY hotelname;
++--------+-----------------+
+| amount | hotelname       |
++--------+-----------------+
+|      2 | Omni Shoreham   |
+|      2 | Phoenix Park    |
+|      3 | The Tower Hotel |
++--------+-----------------+
+
+---
+
+mysql> select count(type), type, hotelname from booking b join hotel h on h.hotelno = b.hotelno join room r on r.roomno = b.roomno where city = "London" GROUP BY type, hotelname ORDER BY count(type) DESC;
++-------------+--------+-----------------+
+| count(type) | type   | hotelname       |
++-------------+--------+-----------------+
+|           3 | single | The Tower Hotel |
+|           2 | family | Omni Shoreham   |
+|           2 | double | The Tower Hotel |
+|           1 | double | Omni Shoreham   |
+|           1 | double | Phoenix Park    |
+|           1 | family | The Tower Hotel |
++-------------+--------+-----------------+
+
+
+---
+
+mysql> select distinct roomno, hotelno, sum(price*1.05) as newprice from room group by roomno, hotelno;
++--------+---------+----------+
+| roomno | hotelno | newprice |
++--------+---------+----------+
+|    501 | fb01    |  19.9500 |
+|    601 | fb01    |  30.4500 |
+|    701 | ch02    |  10.5000 |
+|    701 | fb01    |  40.9500 |
+|    801 | ch02    |  15.7500 |
+|    901 | dc01    |  18.9000 |
+|   1001 | ch01    |  31.4895 |
+|   1001 | dc01    |  31.5000 |
+|   1001 | fb02    |  60.9000 |
+|   1101 | ch01    |  62.9895 |
+|   1101 | dc01    |  36.7500 |
+|   1101 | fb02    |  90.3000 |
++--------+---------+----------+
