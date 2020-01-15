@@ -5,7 +5,7 @@ UNF: Everything in one entity, this is the case
      branch(staffNo, dentistName, patientNo, patientName, surgeryNo, surgeryName)
 2NF: branch(staffNo, patientNo, appointmentNo, surgeryNo)
      branch(staffNo, dentistName)
-     branch(patientNo, patientName)
+     branch(patientNo, patientName, appointmentNo)
      branch(surgeryNo, surgeryName)
      branch(appointmentNo, date, time)
 3NF: 2NF
