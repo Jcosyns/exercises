@@ -1,0 +1,9 @@
+exercise3
+
+UNF: branch(FullName, BedNumber, PatientNumber, WardNumber, WardName, DrugNumber, Name, Desc, Dosage, MetOfAdm,UPD, sDate, fDate)
+
+1NF: branch(PatientNo, FullName, BedNo, WardNo)
+     branch(PatientNo, DrugNo, sDate, UPD, fDate)
+     branch(WardNo, WardName)
+     branch(DrugNo, DrugName, Description, Dosage, MetOfAdmin)
+2NF: 
