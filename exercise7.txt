@@ -1,0 +1,14 @@
+exercise7
+
+/
+
+db.getCollection('restaurants').find({borough: "Bronx"}).skip(5).limit(5)
+
+db.getCollection('restaurants').find({
+        "grades.score": {$gte: 90}
+        })
+
+db.getCollection('restaurants').find({ 
+    cuisine: {$ne: "American"},
+    "grades.score": {$gt: 70},
+    "address.coord": {$lt:-65.756168}})
