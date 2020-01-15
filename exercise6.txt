@@ -1,0 +1,126 @@
+Exercise 6
+
+mysql> select stdFirstName, stdLastName, stdCity, stdGPA from student where stdGPA >= 3.7
+    -> ;
++--------------+-------------+---------+--------+
+| stdFirstName | stdLastName | stdCity | stdGPA |
++--------------+-------------+---------+--------+
+| CRISTOPHER   | COLAN       | SEATTLE |   4.00 |
+| WILLIAM      | PILGRIM     | BOTHELL |   3.80 |
++--------------+-------------+---------+--------+
+
+---
+
+mysql> select FacFirstName, FacLastName, FacHireDate from faculty where FacHireDate >= "1999-01-01" AND FacHireDate <= "2000-12-31";
++--------------+-------------+-------------+
+| FacFirstName | FacLastName | FacHireDate |
++--------------+-------------+-------------+
+| CRISTOPHER   | COLAN       | 1999-03-01  |
+| JULIA        | MILLS       | 2000-03-15  |
++--------------+-------------+-------------+
+
+---
+
+mysql> select offerNo, CourseNo, FacSSN from offering where( OffTerm = "FALL" and OffYear = "2005") OR (Offterm = "WINTER" and OffYear = "2006");
++---------+----------+-------------+
+| offerNo | CourseNo | FacSSN      |
++---------+----------+-------------+
+|    1234 | IS320    | 098-76-5432 |
+|    4321 | IS320    | 098-76-5432 |
+|    4444 | IS320    | 543-21-0987 |
+|    5555 | FIN300   | 765-43-2109 |
+|    5678 | IS480    | 987-65-4321 |
+|    6666 | FIN450   | 987-65-4321 |
++---------+----------+-------------+
+
+---
+
+mysql> select OfferNo, o.CourseNo, OffTime, OffDays from offering o join course c on o.courseno = c.courseno where crsDesc LIKE "% DATABASE %" or crsDesc LIKE "% PROGRAMMING %" AND offterm = "SPRING" AND offyear = "2006";
++---------+----------+----------+---------+
+| OfferNo | CourseNo | OffTime  | OffDays |
++---------+----------+----------+---------+
+|    5678 | IS480    | 10:30:00 | MW      |
+|    5679 | IS480    | 15:30:00 | TTH     |
++---------+----------+----------+---------+
+
+---
+
+mysql> select offerno, courseno, facfirstname, faclastname from offering o join faculty f on o.FacSSN = f.FacSSN where courseno like "IS%" and offterm = "fall" and offyear = "2005" and facrank = "asst";
++---------+----------+--------------+-------------+
+| offerno | courseno | facfirstname | faclastname |
++---------+----------+--------------+-------------+
+|    1234 | IS320    | LEONARD      | VINCE       |
+|    4321 | IS320    | LEONARD      | VINCE       |
++---------+----------+--------------+-------------+
+
+---
+
+mysql> select stdMajor, avg(stdGPA) as averageGPA from student Group By stdMajor;
++----------+------------+
+| stdMajor | averageGPA |
++----------+------------+
+| IS       |   3.233333 |
+| FIN      |   2.800000 |
+| ACCT     |   3.400000 |
++----------+------------+
+
+---
+
+mysql> select courseno, offyear from offering group by courseno, offyear;
++----------+---------+
+| courseno | offyear |
++----------+---------+
+| IS320    |    2006 |
+| IS320    |    2005 |
+| IS460    |    2005 |
+| FIN300   |    2006 |
+| IS480    |    2006 |
+| FIN450   |    2006 |
+| FIN480   |    2006 |
+| IS460    |    2006 |
++----------+---------+
+
+---
+
+/
+
+---
+
+mysql> select stdMajor, min(stdGPA), max(stdGPA), stdClass from student group by stdmajor, stdclass;
++----------+-------------+-------------+----------+
+| stdMajor | min(stdGPA) | max(stdGPA) | stdClass |
++----------+-------------+-------------+----------+
+| IS       |        3.00 |        3.00 | FR       |
+| FIN      |        2.50 |        2.70 | JR       |
+| ACCT     |        3.50 |        3.50 | JR       |
+| IS       |        2.20 |        4.00 | SR       |
+| FIN      |        3.20 |        3.20 | SR       |
+| IS       |        3.60 |        3.60 | JR       |
+| ACCT     |        3.30 |        3.30 | SO       |
+| IS       |        3.80 |        3.80 | SO       |
++----------+-------------+-------------+----------+
+
+---
+
+/
+
+---
+/...
+---
+Last exercise:
+
+mysql> select courseno, o.offerno, offlocation, offtime, offdays from student s join enrollment e on s.stdssn = e.stdssn join offering o on o.offerno = e.offerno where stdfirstname = "Bob" and offterm = "spring" and offyear = "2006" ;
++----------+---------+-------------+----------+---------+
+| courseno | offerno | offlocation | offtime  | offdays |
++----------+---------+-------------+----------+---------+
+| IS460    |    9876 | BLM307      | 13:30:00 | TTH     |
+| IS480    |    5679 | BLM412      | 15:30:00 | TTH     |
++----------+---------+-------------+----------+---------+
+ !+ join faculty for faculty name!
+
+---
+
+
+
+
+
