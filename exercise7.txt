@@ -1,14 +1,43 @@
 exercise7
 
-/
+db.getCollection('restaurant').find({},{_id: 1, name: 1, borough: 1, cuisine: 1})
+
+
+---
 
 db.getCollection('restaurants').find({borough: "Bronx"}).skip(5).limit(5)
+
+---
 
 db.getCollection('restaurants').find({
         "grades.score": {$gte: 90}
         })
 
+---
+
 db.getCollection('restaurants').find({ 
     cuisine: {$ne: "American"},
     "grades.score": {$gt: 70},
     "address.coord": {$lt:-65.756168}})
+
+---
+
+db.getCollection('restaurants').find({
+    borough: "Bronx",
+    $or: [{cuisine: "American"}, {cuisine: "Chinese"}]})
+
+---
+
+db.getCollection('restaurants').find({},{_id:1, name: 1, borough:1, cuisine:1,
+    $not:[{
+        $or:[{borough: "Staten Island"}, {borough:"Queens"},
+        {borough: "Bronxor Brooklyn"}]}]})
+
+---
+
+db.getCollection('restaurants').find({"grades.score": {$lt: 10}},
+{_id:1, name: 1, borough:1, cuisine:1})
+
+---
+
+
