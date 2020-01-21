@@ -40,4 +40,16 @@ db.getCollection('restaurants').find({"grades.score": {$lt: 10}},
 
 ---
 
+db.getCollection('restaurants').find({"grades.grade":"A", "grades.score":11},
+{_ide:1, name:1, borough:1, cuisine:1})
+
+---
+
+db.getCollection('restaurants').find({}), sort({cuisine:1}).sort({borough:-1})
+
+---
+
+db.getCollection('restaurants').find({"address.street":{$exists:true}})
+
+
 
