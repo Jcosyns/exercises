@@ -1,0 +1,28 @@
+Exercise 8
+
+!use rest.ensembl.org!
+
+curl "http://rest.ensembl.org/sequence/region/Homo_sapiens/chr13:32889000-32891000?mask=hard" -H "Content-type:text/x-fasta"
+
+there are 4 repeat regions
+
+---
+
+curl "http://rest.ensembl.org/xrefs/symbol/homo_sapiens/ccr5"
+
+---
+
+curl "http://rest.ensembl.org/homology/id/ENSG00000160791?format=condensed;content-type=text/xml;type=orthologues" | grep pan_troglodytes
+
+---
+
+curl "http://rest.ensembl.org/sequence/id/ENST00000001146?content-type=text/x-fasta"
+
+---
+
+/
+
+---
+
+curl "http://rest.ensembl.org/sequence/region/Homo_sapiens/chr7:35182-35432" -H "Content-type:text/x-fasta"
+
