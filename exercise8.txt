@@ -20,7 +20,7 @@ curl "http://rest.ensembl.org/sequence/id/ENST00000001146?content-type=text/x-fa
 
 ---
 
-/
+curl "http://rest.ensembl.org/archive/id" -H 'Content-type:application/json' -H 'Accept:application/json' -X POST -d '{"id":["NSG00000002587","ENSG00000003056"]}'
 
 ---
 
